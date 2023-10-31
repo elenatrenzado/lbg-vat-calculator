@@ -1,4 +1,4 @@
-
+// This adds install and test stages before static code analysis
 pipeline {
   agent any
 
@@ -6,7 +6,7 @@ pipeline {
     stage('Checkout') {
         steps {
           // Get some code from a GitHub repository
-          git branch: 'main', url: 'https://github.com/elenatrenzado/lbg-vat-calculator/'
+          git branch: 'main', url: 'https://github.com/elenatrenzado/lbg-vat-calculator.git'
         }
     }
     stage('Install') {
@@ -31,8 +31,8 @@ pipeline {
         }
         timeout(time: 10, unit: 'MINUTES'){
           waitForQualityGate abortPipeline: true
+          }
         }
     }
   }
-}
 }
