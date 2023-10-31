@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // This adds install and test stages before static code analysis
+=======
+// This adds a quality gate that aborts the pipeline if the quality threshold isn't met
+>>>>>>> 829ef8242cea916ff6d561879647f7b4aa0102fb
 pipeline {
   agent any
 
@@ -6,7 +10,7 @@ pipeline {
     stage('Checkout') {
         steps {
           // Get some code from a GitHub repository
-          git branch: 'main', url: 'https://github.com/elenatrenzado/lbg-vat-calculator.git'
+          git branch: 'main', url: 'https://github.com/elenatrenzado/lbg-vat-calculator/'
         }
     }
     stage('Install') {
@@ -31,8 +35,12 @@ pipeline {
         }
         timeout(time: 10, unit: 'MINUTES'){
           waitForQualityGate abortPipeline: true
+<<<<<<< HEAD
           }
+=======
+>>>>>>> 829ef8242cea916ff6d561879647f7b4aa0102fb
         }
     }
   }
+}
 }
