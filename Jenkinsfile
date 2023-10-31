@@ -1,3 +1,4 @@
+// This adds a quality gate that aborts the pipeline if the quality threshold isn't met
 pipeline {
   agent any
 
@@ -5,7 +6,7 @@ pipeline {
     stage('Checkout') {
         steps {
           // Get some code from a GitHub repository
-          git branch: 'main', url: 'https://github.com/elenatrenzado/lbg-vat-calculator.git'
+          git branch: 'main', url: 'https://github.com/elenatrenzado/lbg-vat-calculator/'
         }
     }
     stage('SonarQube Analysis') {
@@ -15,8 +16,11 @@ pipeline {
         steps {
             withSonarQubeEnv('sonar-qube-1') {        
               sh "${scannerHome}/bin/sonar-scanner"
-            }   
+        }
+        timeout(time: 10, unit: 'MINUTES'){
+          waitForQualityGate abortPipeline: true
         }
     }
   }
+}
 }
